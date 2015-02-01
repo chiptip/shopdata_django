@@ -1,0 +1,1 @@
+# shopdata_django
