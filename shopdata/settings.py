@@ -26,6 +26,7 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SITE_URL = 'https://test.shopdata.io:1337'
 
 # Application definition
 
@@ -46,6 +47,18 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
+
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+    "shopdata.common.context_processor.env_urls",
 )
 
 ROOT_URLCONF = 'shopdata.urls'
@@ -82,11 +95,20 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "assets"),
+)
+
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, "templates"),
+)
+
 # Amazon API credential
 CLIENT_ID = None
 CLIENT_SECRET = None
 
 try:
-    from local_settings import *
+    from settings_local import *
+    INSTALLED_APPS += DEBUG_APPS
 except ImportError as e:
     pass
