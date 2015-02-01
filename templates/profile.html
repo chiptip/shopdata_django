@@ -1,7 +1,15 @@
-{% extends 'base.html' %}
+{% extends 'amazon_base.html' %}
 
-{% block content %}
+{% block amazon_js_onload %}
+		var token = "{{ token }}";
+		amazon.Login.retrieveProfile(token, function(resp){
+			if(resp.success){
+				console.log('profile name: ' + resp.profile.Name);
+				console.log('profile email: ' + resp.profile.PrimaryEmail);
+				console.log('profile zip: ' + resp.profile.PostalCode);
+			} else {
+				console.log('account retrieve error msg: ' + resp.error);
+			}
 
-	Profile page
-
-{% endblock content %}
+		});
+{% endblock amazon_js_onload %}
