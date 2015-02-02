@@ -1,9 +1,10 @@
+from shopdata.settings import ACCESS_KEY, ACCESS_SECRET, ASSOCIATE_ID
 import amazonproduct
 
 config = {
-	'access_key': 'AKIAIIXOTMRH2AZMQKJA',
-	'secret_key': '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',
-	'associate_tag': 'shopdata-20',
+	'access_key': ACCESS_KEY,
+	'secret_key': ACCESS_SECRET,
+	'associate_tag': ASSOCIATE_ID,
 	'locale': 'us'
 }
 
