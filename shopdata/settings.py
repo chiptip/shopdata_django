@@ -106,6 +106,9 @@ TEMPLATE_DIRS = (
 # Amazon API credential
 CLIENT_ID = None
 CLIENT_SECRET = None
+ACCESS_KEY = None
+ACCESS_SECRET = None
+ASSOCIATE_ID = None
 
 try:
     from settings_local import *

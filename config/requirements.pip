@@ -1,3 +1,6 @@
 Django==1.7.4
 wsgiref==0.1.2
+python-amazon-product-api==0.2.8
+django-sslserver==0.14
+lxml==3.4.1
 
