@@ -6,6 +6,12 @@ settings_local.py
 # C extensions
 *.so
 
+# sqlite3
+db.sqlite3
+
+# ignore backup files
+*.bak
+
 # Distribution / packaging
 .Python
 env/
