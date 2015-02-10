@@ -110,6 +110,8 @@ ACCESS_KEY = None
 ACCESS_SECRET = None
 ASSOCIATE_ID = None
 
+ES_URLS = None
+
 try:
     from settings_local import *
     INSTALLED_APPS += DEBUG_APPS

@@ -1,1 +1,26 @@
 {% extends 'base.html' %}
+
+{% block content %}
+<form method="GET" action="{{ url "product" }}">
+	<div class="container" style="width: 560px;">
+		<p style="font-size: 56px;">
+			I would like to buy a gift for a friend,
+			<select>
+				<option value="boy">he</option>
+				<option value="girl">she</option>
+			</select>
+			is
+			<select>
+				<option value="21+">21+</option>
+				<option value="10-14">10-14</option>
+				<option value="3-10">3-10</option>
+			</select>
+			years old and likes
+			<i>toys</i>
+		</p>
+		<p>
+			<a class="btn btn-primary btn-lg" href="#" role="button">See ideas &raquo;</a>
+		</p>
+	</div>
+</form>
+{% endblock content %}
