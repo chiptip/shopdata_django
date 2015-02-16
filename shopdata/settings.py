@@ -110,7 +110,9 @@ ACCESS_KEY = None
 ACCESS_SECRET = None
 ASSOCIATE_ID = None
 
-ES_URLS = None
+CATALOG_INDEX = 'catalog-index'
+ES_URLS = 'http://localhost:9200'
+ES_INDEXES = {'default': CATALOG_INDEX}
 
 try:
     from settings_local import *

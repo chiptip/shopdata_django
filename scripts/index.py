@@ -2,6 +2,7 @@ from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from elasticsearch import Elasticsearch
 from shopdata.settings import ACCESS_KEY, ACCESS_SECRET, ASSOCIATE_ID
+from shopdata.catalog.models import Catalog, Product
 
 import amazonproduct
 
@@ -70,10 +71,30 @@ for item in results:
 	if counter > 10:
 		break
 
-es = Elasticsearch()
-es.index(
-	index="catalog-index",
-	doc_type="external",
-	id=1,
-	body=catalog_doc
-)
+	add_db(catalog_doc)
+
+def elastic_index(doc):
+	es = Elasticsearch()
+	es.index(
+		index="catalog-index",
+		doc_type="external",
+		id=1,
+		body=catalog_doc
+	)
+
+def add_db(doc):
+	catalog = Catalog(catagory=doc['category'],
+					  age=doc['age'],
+					  gender=doc['gender'],
+					  source=doc['source'],
+					  order=doc['order'])
+	catalog.save()
+
+	for item in catalog['products']:
+		product = Product(asin=item['asin'],
+						  title=item['title'],
+						  category=item['category'],
+						  manufacturer=item['manufacturer'],
+						  url=item['url'],
+						  catalog=catalog)
+		product.save()

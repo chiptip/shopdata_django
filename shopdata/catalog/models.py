@@ -1,24 +1,25 @@
 from django.db import models
-from elasticutils import MappingType
+from elasticutils.contrib.django import MappingType, Indexable
+from shopdata.settings import CATALOG_INDEX
 
-CATALOG_INDEX = 'catalog-index'
 CATALOG_TYPE = 'external'
 
-class Product(object):
-	asin = models.CharField(max_length=150)
-	title = models.CharField(max_length=150)
-	category = models.CharField(max_length=150)
-	manufacturer = models.CharField(max_length=150, null=True)
-	url = models.CharField(max_length=255)
-	catalog = models.ForeignKey(Catalog, related_name='items')
-
-class Catalog(object):
+class Catalog(models.Model):
 	category = models.CharField(max_length=150)
 	age = models.CharField(max_length=50)
 	gender = models.CharField(max_length=15)
 	source = models.CharField(max_length=150)
 	order = models.CharField(max_length=150)
 	timestamp = models.DateTimeField(auto_now_add=True)
+
+
+class Product(models.Model):
+	asin = models.CharField(max_length=150)
+	title = models.CharField(max_length=150)
+	category = models.CharField(max_length=150)
+	manufacturer = models.CharField(max_length=150, null=True)
+	url = models.CharField(max_length=255)
+	catalog = models.ForeignKey(Catalog, related_name='items')
 
 
 class CatalogMappingType(MappingType, Indexable):
