@@ -4,6 +4,15 @@ a django project to test drive amazon associates api
 
 to start:
 
+documentation links:
+	* [elasticsearch utils](http://elasticutils.readthedocs.org/en/latest/dev_documentation.html)
+	* [elasticsearch](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-get.html)
+
+To start elasticsearch locally on a mac 
+
+		$> /usr/local/elasticsearch/bin/elasticsearch
+
+
 1. install dependencies
 		pip install -r config/requirements.pip
 1. create settings_local.py with the following specifications
