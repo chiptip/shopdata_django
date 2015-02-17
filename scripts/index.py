@@ -5,6 +5,10 @@ from shopdata.settings import ACCESS_KEY, ACCESS_SECRET, ASSOCIATE_ID
 from shopdata.catalog.models import Catalog, Product
 
 import amazonproduct
+import django
+
+
+django.setup()
 
 config = {
 	'access_key': ACCESS_KEY,
@@ -18,6 +22,32 @@ api = amazonproduct.API(cfg=config)
 # items = api.item_search('Books', Publisher="O'Reilly")
 # for book in items:
 # 	print '%s: "%s"' % (book.ItemAttributes.Author, book.ItemAttributes.Title)
+
+def elastic_index(doc):
+	es = Elasticsearch()
+	es.index(
+		index="catalog-index",
+		doc_type="external",
+		id=1,
+		body=catalog_doc
+	)
+
+def add_db(doc):
+	catalog = Catalog(category=doc['category'],
+					  age=doc['age'],
+					  gender=doc['gender'],
+					  source=doc['source'],
+					  order=doc['order'])
+	catalog.save()
+
+	for item in doc['products']:
+		product = Product(asin=item['asin'],
+						  title=item['title'],
+						  category=item['category'],
+						  manufacturer=item['manufacturer'],
+						  url=item['url'],
+						  catalog=catalog)
+		product.save()
 
 # result = api.item_lookup('B006H3MIV8', ResponseGroup='Images')
 # for item in result.Items.Item:
@@ -71,30 +101,4 @@ for item in results:
 	if counter > 10:
 		break
 
-	add_db(catalog_doc)
-
-def elastic_index(doc):
-	es = Elasticsearch()
-	es.index(
-		index="catalog-index",
-		doc_type="external",
-		id=1,
-		body=catalog_doc
-	)
-
-def add_db(doc):
-	catalog = Catalog(catagory=doc['category'],
-					  age=doc['age'],
-					  gender=doc['gender'],
-					  source=doc['source'],
-					  order=doc['order'])
-	catalog.save()
-
-	for item in catalog['products']:
-		product = Product(asin=item['asin'],
-						  title=item['title'],
-						  category=item['category'],
-						  manufacturer=item['manufacturer'],
-						  url=item['url'],
-						  catalog=catalog)
-		product.save()
+add_db(catalog_doc)
