@@ -12,6 +12,9 @@ class Catalog(models.Model):
 	order = models.CharField(max_length=150)
 	timestamp = models.DateTimeField(auto_now_add=True)
 
+	def __unicode__(self):
+		return '%s - %d' % (self.category, self.pk)
+
 
 class Product(models.Model):
 	asin = models.CharField(max_length=150)
@@ -20,6 +23,9 @@ class Product(models.Model):
 	manufacturer = models.CharField(max_length=150, null=True)
 	url = models.CharField(max_length=255)
 	catalog = models.ForeignKey(Catalog, related_name='items')
+
+	def __unicode__(self):
+		return '%s - %d' % (self.asin, self.pk)
 
 
 class CatalogMappingType(MappingType, Indexable):
